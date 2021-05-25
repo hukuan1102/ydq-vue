@@ -42,8 +42,7 @@ export default {
     },
     methods:{
         getMeasurementList(){
-            this.axios.get("/measurementValues").then((res) => {
-                console.log(res)
+            this.axios.get("/measurement").then((res) => {
                 if(res.data != null){
                     this.measurementListData = res.data.content
                 }
@@ -53,7 +52,7 @@ export default {
             this.$router.push('/historyData/' + row.id)
         },
         handleDownloadClick(row){
-            const url = this.axios.defaults.baseURL + "/measurement/export?id=" + row.id;
+            const url = this.axios.defaults.baseURL + "/measurementValues/export?id=" + row.id;
             window.open(url);
         },
         handleDeleteClick(row){

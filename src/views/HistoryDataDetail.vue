@@ -22,7 +22,7 @@ export default {
     },
     methods:{
         getMeasurementData(){
-            this.$fetch("/measurement", {id : this.id}).then((res) => {
+            this.$fetch("/measurementValues", {id : this.id}).then((res) => {
                 if(res.data != null){
                     this.times = res.data.times;
                     this.gsr = res.data.gsr;
