@@ -29,11 +29,13 @@ export default {
                 case 'historyData' :
                     if(this.$route.path !== "/historyData"){
                         this.$router.push("/historyData");
+                        this.$store.dispatch('saveSelectBarValue', "1");
                     }
                     break;
                 case 'liveData' :
                     if(this.$route.path !== "/"){
                         this.$router.push("/");
+                        this.$store.dispatch('saveSelectBarValue', "0");
                     }
                     break;
                 default:
@@ -46,13 +48,13 @@ export default {
 <style lang="scss">
 .headerContainer{
     width: 100%;
-    height: 80px;
-    line-height: 80px;
+    height: 60px;
+    line-height: 60px;
     background-color: #636;
     display: flex;
     .headerImg{
-        width: 140px;
-        height: 80px;
+        width: 120px;
+        height: 60px;
         img{
             width: 100%;
             height: 100%;
@@ -61,7 +63,7 @@ export default {
     .headerTitle{
         margin-left: 40px;
         width: fit-content;
-        height: 80px;
+        height: 60px;
         span{
             color: #ffffff;
             font-size: 16px;
@@ -69,8 +71,8 @@ export default {
     }
     .selectBar{
         width: fit-content;
-        height: 80px;
-        line-height: 80px;
+        height: 60px;
+        line-height: 60px;
         margin-left: 50px;
         .el-tabs__item{
             font-size: 16px;

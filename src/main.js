@@ -2,6 +2,7 @@ import Vue from 'vue'
 import router from './router'
 import App from './App.vue'
 import axios from 'axios'
+import store from './store'
 import VueAxios from 'vue-axios'
 import ElementUI from 'element-ui'
 import * as echarts from 'echarts'
@@ -19,6 +20,7 @@ Vue.prototype.$deletefn = deletefn;
 
 
 new Vue({
+    store,
     router,
     render: h => h(App),
 }).$mount('#app')
