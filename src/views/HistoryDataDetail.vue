@@ -14,6 +14,8 @@ export default {
             gsr: [],
             scl: [],
             scr: [],
+            emotions: [],
+            events: [],
             id: this.$route.params.id
         }
     },
@@ -28,6 +30,8 @@ export default {
                     this.gsr = res.data.gsr;
                     this.scl = res.data.scl;
                     this.scr = res.data.scr;
+                    this.emotions = res.data.emotion;
+                    this.events = res.data.event;
                     this.drawFirstChartLine();
                     this.drawSecondChartLine();
                 }
@@ -102,6 +106,37 @@ export default {
         },
         drawSecondChartLine(){
             let firstChart = this.$echarts.init(document.getElementById('secondChart'))
+
+            var nullArr = [];
+            for(let i = 0; i< this.times.length; i++){
+                nullArr.push(null);
+            }
+            var arrTotal = [];
+            var count = 1;
+            this.events.forEach(element => {
+                var arr = [];
+                const startTime = element.times[0];
+                const timeLength = element.times.length;
+                var startIndex = 0;
+                for(let i = 0; i < this.times.length; i++){
+                    if(this.times[i] == startTime){
+                        startIndex = i;
+                        break;
+                    }
+                }
+                for(let j = 0; j < startIndex; j++){
+                    arr.push(null);
+                }
+                for(let n = 0; n < timeLength; n++){
+                    arr.push(count);
+                }
+                const endLength = this.times.length - arr.length;
+                for(let m = 0; m < endLength; m++){
+                    arr.push(null);
+                }
+                arrTotal.push(arr);
+                count++;
+            });
             firstChart.setOption({
                 title: {
                     text: 'User Feedback',
@@ -110,9 +145,9 @@ export default {
                 tooltip: {
                     trigger: 'axis'
                 },
-                color:['#2146FF','#E00B60','#0BE064'],
+                color:[],
                 legend: {
-                    data: ['gsr', 'scl', 'scr'],
+                    data: [],
                     left:'center',
                     textStyle:{
                         color:'#000000',
@@ -130,37 +165,62 @@ export default {
                     boundaryGap: false,
                     data: this.times
                 },
-                yAxis: {
-                    type: 'value'
-                },
+                yAxis: {},
                 series: [
                     {
-                        name: 'gsr',
+                        name: 'event1',
                         type: 'line',
-                        data: this.gsr,
+                        data: arrTotal[0],
                         lineStyle: {
                             normal: {
-                                color: '#2146FF',
+                                color: '#db2b08',
                             }
                         }
                     },
                     {
-                        name: 'scl',
+                        name: 'event2',
                         type: 'line',
-                        data: this.scl,
+                        data: arrTotal[1],
                         lineStyle: {
                             normal: {
-                                color: '#E00B60',
+                                color: '#1163e6',
                             }
                         }
                     },
                     {
-                        name: 'scr',
+                        name: 'event3',
                         type: 'line',
-                        data: this.scr,
+                        data: arrTotal[2],
                         lineStyle: {
                             normal: {
-                                color: '#0BE064',
+                                color: '#00ff00',
+                            }
+                        }
+                    },
+                    {
+                        name: 'event4',
+                        type: 'line',
+                        data: arrTotal[3],
+                        lineStyle: {
+                            normal: {
+                                color: '#ff00ff',
+                            }
+                        }
+                    },
+                    {
+                        name: 'emotion',
+                        type: 'bar',
+                        data: this.emotions,
+                        itemStyle:{
+                            normal:{
+                                color:function(params){
+                                    if(params.value == 1){
+                                        return "#FE8463";
+                                    }else if(params.value ==2){
+                                        return "#27727B";
+                                    }
+                                    return "#9BCA63";
+                                }
                             }
                         }
                     }

@@ -9,7 +9,7 @@ export default {
     name: 'index',
     data(){
         return{
-            path: "ws://20.71.20.193:8080/websocket",
+            path: "ws://192.168.9.101:8080/stressMeasurement/webSocket",
             ws: {},
             chartData: [],
             currentPath: this.$store.state.selectBarValue,
@@ -30,14 +30,17 @@ export default {
             this.ws = new WebSocket(this.path)
             this.ws.onopen = () => {
                 this.ws.send('connection success');
+                this.ws.send('send message1');
             }
             this.ws.onmessage = (data) => {
-                let cData = JSON.parse(data.data)
-                if (this.chartData.length > 20) {
-                    this.chartData.shift()
-                }
-                this.chartData.push(cData)
-                console.log(this.chartData)
+                console.log("get meassage");
+                console.log(data.data);
+                // let cData = JSON.parse(data.data)
+                // if (this.chartData.length > 20) {
+                //     this.chartData.shift()
+                // }
+                // this.chartData.push(cData)
+                // console.log(this.chartData)
             }
             this.ws.onclose = () => {
                 console.log('ws connection status：' + this.ws.readyState);
